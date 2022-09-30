@@ -3,6 +3,8 @@ import { convertToCelsius, convertToFahrenheit } from './utilities';
 
 const location = 'Arctic Village';
 
+let temps;
+
 const getCurrentTempFromApi = async (city) => {
     const response = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=8ff600f260cf77d42329c37dcecce5f4`, {
         mode: 'cors'
@@ -18,9 +20,11 @@ const getCurrentTempFromApi = async (city) => {
         const celsius = convertToCelsius(response);
         const fahrenheit = convertToFahrenheit(response);
         
-        let temps = { celsius, fahrenheit }
-        console.log(temps);
+        temps = { celsius, fahrenheit }
     });
+
+    console.log(temps);
+
 
 
 

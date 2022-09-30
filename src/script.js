@@ -1,9 +1,7 @@
 import './style.css';
 import { convertToCelsius, convertToFahrenheit } from './utilities';
 
-const location = 'Arctic Village';
-
-let temps;
+const location = 'London';
 
 const getCurrentTempFromApi = async (city) => {
     const response = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=8ff600f260cf77d42329c37dcecce5f4`, {
@@ -14,17 +12,21 @@ const getCurrentTempFromApi = async (city) => {
     return data.main.temp;
 }
 
-    getCurrentTempFromApi(location)
-    .then((response) => {
+async function convertFromKelvin() {
+    const kelvinValue = await getCurrentTempFromApi(location)
 
-        const celsius = convertToCelsius(response);
-        const fahrenheit = convertToFahrenheit(response);
-        
-        temps = { celsius, fahrenheit }
+    const celsius = convertToCelsius(kelvinValue);
+    const fahrenheit = convertToFahrenheit(kelvinValue);
+
+    return { celsius, fahrenheit };
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    convertFromKelvin()
+    .then((objTemps) => {
+        console.log(objTemps);
     });
-
-    console.log(temps);
-
+});
 
 
 

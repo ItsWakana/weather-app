@@ -2,14 +2,13 @@ const path = require('path');
 
 module.exports = {
     mode: 'development',
-    // entry: './src/script.js',
-    entry: path.resolve(__dirname, 'src/script.js'),
+    entry: './src/script.js',
     output: {
         filename: 'main.js',
         path: path.resolve(__dirname, 'dist'),
         assetModuleFilename: '[name][ext]'
     },
-    devTool: 'inline-source-map',
+    devtool: 'inline-source-map',
     module: {
         rules:  [
             {
@@ -22,4 +21,4 @@ module.exports = {
             }
         ],
     },
-},
+}

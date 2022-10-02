@@ -8,8 +8,12 @@
 </head>
 <body>
     <div class="main-container" id="main-container">
-        <input type="text" name="search-place" id="search-place" placeholder="Search for a location">
-        <button class="search-button" data-search>Search</button>
+        <div class="search-container">
+            <input type="text" name="search-place" id="search-place" placeholder="Enter a location">
+            <div class="celsius-radio">°C</div>
+            <div class="fahrenheit-radio">°F</div>
+            <button class="search-button" data-search>Search</button>
+        </div>
         <div class="display"></div>
     </div>
     <script src="main.js"></script>

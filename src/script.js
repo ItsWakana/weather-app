@@ -1,7 +1,10 @@
+import { getLocationInput, renderTemp } from './DomElements';
 import './style.css';
 import { convertToCelsius, convertToFahrenheit } from './utilities';
 
-const location = 'London';
+const location = 'Arctic Village';
+
+const searchButton = document.querySelector('.search-button');
 
 const getCurrentTempFromApi = async (city) => {
     const response = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=8ff600f260cf77d42329c37dcecce5f4`, {
@@ -12,19 +15,21 @@ const getCurrentTempFromApi = async (city) => {
     return data.main.temp;
 }
 
-async function convertFromKelvin() {
+async function convertFromKelvin(location) {
     const kelvinValue = await getCurrentTempFromApi(location)
 
-    const celsius = convertToCelsius(kelvinValue);
-    const fahrenheit = convertToFahrenheit(kelvinValue);
+    const celsius = Math.round(convertToCelsius(kelvinValue));
+    const fahrenheit = Math.round(convertToFahrenheit(kelvinValue));
 
     return { celsius, fahrenheit };
 }
 
-window.addEventListener('DOMContentLoaded', () => {
-    convertFromKelvin()
+searchButton.addEventListener('click', () => {
+    const location = getLocationInput();
+
+    convertFromKelvin(location)
     .then((objTemps) => {
-        console.log(objTemps);
+        renderTemp(objTemps);
     });
 });
 

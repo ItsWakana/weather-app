@@ -2,8 +2,6 @@ import { getLocationInput, renderTemp } from './DomElements';
 import './style.css';
 import { convertToCelsius, convertToFahrenheit } from './utilities';
 
-const location = 'Arctic Village';
-
 const searchButton = document.querySelector('.search-button');
 
 const getCurrentTempFromApi = async (city) => {
@@ -12,14 +10,17 @@ const getCurrentTempFromApi = async (city) => {
     });
 
     const data = await response.json();
-    return data.main.temp;
+    const kelvin = data.main.temp;
+
+    const tempObj = convertFromKelvin(kelvin);
+    return tempObj;
+
 }
 
-async function convertFromKelvin(location) {
-    const kelvinValue = await getCurrentTempFromApi(location)
+function convertFromKelvin(kelvinVal) {
 
-    const celsius = Math.round(convertToCelsius(kelvinValue));
-    const fahrenheit = Math.round(convertToFahrenheit(kelvinValue));
+    const celsius = Math.round(convertToCelsius(kelvinVal));
+    const fahrenheit = Math.round(convertToFahrenheit(kelvinVal));
 
     return { celsius, fahrenheit };
 }
@@ -27,9 +28,9 @@ async function convertFromKelvin(location) {
 searchButton.addEventListener('click', () => {
     const location = getLocationInput();
 
-    convertFromKelvin(location)
-    .then((objTemps) => {
-        renderTemp(objTemps);
+    getCurrentTempFromApi(location)
+    .then((tempObj) => {
+        renderTemp(tempObj);
     });
 });
 

@@ -1,6 +1,9 @@
-import { getLocationInput, renderTemp } from './DomElements';
+import { clearInput, getLocationInput, renderLocation, renderTemp } from './DomElements';
 import './style.css';
 import { convertToCelsius, convertToFahrenheit } from './utilities';
+import magnifyingGlass from '/src/assets/magnifying-glass.svg';
+
+export let format;
 
 const searchButton = document.querySelector('.search-button');
 
@@ -27,10 +30,21 @@ function convertFromKelvin(kelvinVal) {
 
 searchButton.addEventListener('click', () => {
     const location = getLocationInput();
-
     getCurrentTempFromApi(location)
     .then((tempObj) => {
         renderTemp(tempObj);
+        renderLocation(location);
+    });
+});
+
+const toggles = document.querySelectorAll('[data-toggle]');
+toggles.forEach((toggle) => {
+    toggle.addEventListener('click', () => {
+        toggles.forEach((toggle) => toggle.classList.remove('active'));
+        toggle.classList.add('active');
+
+        toggle.dataset.toggle === 'celsius' ? format = 'celsius' :
+        format = 'fahrenheit';
     });
 });
 

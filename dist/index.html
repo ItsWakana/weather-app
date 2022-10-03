@@ -10,11 +10,17 @@
     <div class="main-container" id="main-container">
         <div class="search-container">
             <input type="text" name="search-place" id="search-place" placeholder="Enter a location">
-            <div class="celsius-radio">°C</div>
-            <div class="fahrenheit-radio">°F</div>
-            <button class="search-button" data-search>Search</button>
+            <div data-toggle="celsius" class="celsius-radio">°C</div>
+            <div data-toggle="fahrenheit" class="fahrenheit-radio">°F</div>
+            <div class="search-bg">
+                <img class="search-button" src="magnifying-glass.svg" alt="magnifying=glass">
+            </div>
+
         </div>
-        <div class="display"></div>
+        <div class="display-container">
+            <div class="display-location"></div>
+            <div class="display"></div>
+        </div>
     </div>
     <script src="main.js"></script>
 </body>

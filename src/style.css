@@ -49,6 +49,11 @@ body {
     height: 100%;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
+    transition: 250ms;
+}
+
+.search-bg:hover {
+    background-color: #1d7280;
 }
 
 .search-container > button,

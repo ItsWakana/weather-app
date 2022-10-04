@@ -1,4 +1,5 @@
-import { clearInput, getLocationInput, renderLocation, renderTemp } from './DomElements';
+import { clearInput, getLocationInput, renderDescription, renderLocation, renderTemp } from './DomElements';
+import { fetchGif } from './gifGeneration';
 import './style.css';
 import { convertToCelsius, convertToFahrenheit } from './utilities';
 import magnifyingGlass from '/src/assets/magnifying-glass.svg';
@@ -14,10 +15,12 @@ const getCurrentTempFromApi = async (city) => {
     });
 
     const data = await response.json();
+    // console.log(data.weather[0].description);
     const kelvin = data.main.temp;
+    const weatherDescription = data.weather[0].description;
 
     const tempObj = convertFromKelvin(kelvin);
-    return tempObj;
+    return { tempObj, weatherDescription };
     } catch(error) {
         alert('No results for the location you have input');
     }
@@ -35,12 +38,16 @@ function convertFromKelvin(kelvinVal) {
 searchButton.addEventListener('click', () => {
     const location = getLocationInput();
     getCurrentTempFromApi(location)
-    .then((tempObj) => {
-        if (tempObj === undefined) {
+    .then((obj) => {
+        if (obj.tempObj === undefined) {
             return;
         }
-        renderTemp(tempObj);
+        renderTemp(obj.tempObj);
         renderLocation(location);
+        renderDescription(obj.weatherDescription);
+    })
+    .then(() => {
+        fetchGif(location);
     })
     .catch((error) => console.log(error));
 });

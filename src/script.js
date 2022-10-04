@@ -8,6 +8,7 @@ export let format;
 const searchButton = document.querySelector('.search-button');
 
 const getCurrentTempFromApi = async (city) => {
+    try {
     const response = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=8ff600f260cf77d42329c37dcecce5f4`, {
         mode: 'cors'
     });
@@ -17,6 +18,9 @@ const getCurrentTempFromApi = async (city) => {
 
     const tempObj = convertFromKelvin(kelvin);
     return tempObj;
+    } catch(error) {
+        alert('No results for the location you have input');
+    }
 
 }
 
@@ -32,9 +36,13 @@ searchButton.addEventListener('click', () => {
     const location = getLocationInput();
     getCurrentTempFromApi(location)
     .then((tempObj) => {
+        if (tempObj === undefined) {
+            return;
+        }
         renderTemp(tempObj);
         renderLocation(location);
-    });
+    })
+    .catch((error) => console.log(error));
 });
 
 const toggles = document.querySelectorAll('[data-toggle]');

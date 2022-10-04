@@ -1,6 +1,7 @@
 import { format } from "./script";
 
 export const renderTemp = (obj) => {
+
     const display = document.querySelector('.display');
     if (format === 'celsius') {
         display.innerText = `${obj.celsius} °C`;

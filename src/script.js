@@ -3,26 +3,31 @@ import { fetchGif } from './gifGeneration';
 import './style.css';
 import { convertToCelsius, convertToFahrenheit } from './utilities';
 import magnifyingGlass from '/src/assets/magnifying-glass.svg';
+import refresh from '/src/assets/refresh.svg';
 
 export let format;
 
 const searchButton = document.querySelector('.search-button');
 
 const getCurrentTempFromApi = async (city) => {
+
+    const refresh = document.querySelector('.refresh-icon');
     try {
-    const response = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=8ff600f260cf77d42329c37dcecce5f4`, {
-        mode: 'cors'
-    });
+        refresh.classList.add('visible');
+        const response = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=8ff600f260cf77d42329c37dcecce5f4`, {
+            mode: 'cors'
+        });
+        
+        const data = await response.json();
+        refresh.classList.remove('visible');
 
-    const data = await response.json();
-    // console.log(data.weather[0].description);
-    const kelvin = data.main.temp;
-    const weatherDescription = data.weather[0].description;
+        const kelvin = data.main.temp;
+        const weatherDescription = data.weather[0].description;
 
-    const tempObj = convertFromKelvin(kelvin);
-    return { tempObj, weatherDescription };
+        const tempObj = convertFromKelvin(kelvin);
+        return { tempObj, weatherDescription };
     } catch(error) {
-        alert('No results for the location you have input');
+        alert('There are no results for the location you have entered');
     }
 
 }

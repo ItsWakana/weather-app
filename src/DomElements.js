@@ -22,6 +22,14 @@ export const renderDescription = (desc) => {
     descriptionDisplay.innerText = capitalize;
 }
 
+export const renderWindAndHumidity = ({ windSpeed, humidity }) => {
+    const windDisplay = document.querySelector('.display-wind');
+    const humidityDisplay = document.querySelector('.display-humidity');
+
+    windDisplay.innerText = `Wind: ${windSpeed} mph`;
+    humidityDisplay.innerText = `Humidity: ${humidity}%`
+}
+
 export const getLocationInput = () => {
     const inputField = document.getElementById('search-place').value;
 

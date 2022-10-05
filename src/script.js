@@ -1,4 +1,4 @@
-import { clearInput, getLocationInput, renderDescription, renderLocation, renderTemp } from './DomElements';
+import { clearInput, getLocationInput, renderDescription, renderLocation, renderTemp, renderWindAndHumidity } from './DomElements';
 import { fetchGif } from './gifGeneration';
 import './style.css';
 import { convertToCelsius, convertToFahrenheit } from './utilities';
@@ -21,11 +21,15 @@ const getCurrentTempFromApi = async (city) => {
         const data = await response.json();
         refresh.classList.remove('visible');
 
-        const kelvin = data.main.temp;
+        const tempKelvin = data.main.temp;
         const weatherDescription = data.weather[0].description;
+        const windSpeed = Math.round(data.wind.speed);
+        const humidity = data.main.humidity;
 
-        const tempObj = convertFromKelvin(kelvin);
-        return { tempObj, weatherDescription };
+        const tempObj = convertFromKelvin(tempKelvin);
+
+        return { tempObj, weatherDescription, windSpeed, humidity }
+
     } catch(error) {
         alert('There are no results for the location you have entered');
     }
@@ -50,11 +54,12 @@ searchButton.addEventListener('click', () => {
         renderTemp(obj.tempObj);
         renderLocation(location);
         renderDescription(obj.weatherDescription);
+        renderWindAndHumidity(obj);
         return obj;
     })
-    .then((obj) => {
-        fetchGif(obj);
-    })
+    // .then((obj) => {
+    //     fetchGif(obj);
+    // })
     .catch((error) => console.log(error));
 });
 

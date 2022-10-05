@@ -50,9 +50,10 @@ searchButton.addEventListener('click', () => {
         renderTemp(obj.tempObj);
         renderLocation(location);
         renderDescription(obj.weatherDescription);
+        return obj;
     })
-    .then(() => {
-        fetchGif(location);
+    .then((obj) => {
+        fetchGif(obj);
     })
     .catch((error) => console.log(error));
 });

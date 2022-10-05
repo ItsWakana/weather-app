@@ -1,6 +1,6 @@
-export const fetchGif = (location) => {
+export const fetchGif = ({ weatherDescription }) => {
     const gif = document.querySelector('.weather-gif');
-    fetch(`https://api.giphy.com/v1/gifs/translate?api_key=AGuC5sBSpLwFCnqHU4p4po65KMPMse9G&s=${location}`, {
+    fetch(`https://api.giphy.com/v1/gifs/translate?api_key=AGuC5sBSpLwFCnqHU4p4po65KMPMse9G&s=${weatherDescription}`, {
     mode: 'cors'
 })
 .then((response) => {

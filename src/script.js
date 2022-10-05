@@ -57,9 +57,6 @@ searchButton.addEventListener('click', () => {
         renderWindAndHumidity(obj);
         return obj;
     })
-    // .then((obj) => {
-    //     fetchGif(obj);
-    // })
     .catch((error) => console.log(error));
 });
 

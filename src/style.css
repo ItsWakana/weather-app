@@ -99,7 +99,7 @@ body {
     content: '';
     width: 0;
     height: 3px;
-    background-color: white;
+    background-color: var(--alt-button-clr);
     position: absolute;
     border-radius: 3px;
     /* bottom: 2px; */

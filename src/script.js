@@ -49,15 +49,16 @@ searchButton.addEventListener('click', () => {
         if (obj.tempObj === undefined) {
             return;
         }
+        renderTempSwitch(obj);
         renderTemp(obj.tempObj);
         renderLocation(location);
         renderDescription(obj.weatherDescription);
         renderWindAndHumidity(obj);
-        return obj;
+        // return obj;
     })
-    .then((obj) => {
-        renderTempSwitch(obj);
-    })
+    // .then((obj) => {
+    //     renderTempSwitch(obj);
+    // })
     .catch((error) => console.log(error));
 });
 

@@ -1,11 +1,8 @@
-import { clearInput, getLocationInput, renderDescription, renderLocation, renderTemp, renderWindAndHumidity } from './DomElements';
-import { fetchGif } from './gifGeneration';
+import { clearElements, clearInput, getLocationInput, renderDescription, renderLocation, renderTemp, renderTempSwitch, renderWindAndHumidity } from './DomElements';
 import './style.css';
 import { convertToCelsius, convertToFahrenheit } from './utilities';
 import magnifyingGlass from '/src/assets/magnifying-glass.svg';
 import refresh from '/src/assets/refresh.svg';
-
-export let format;
 
 const searchButton = document.querySelector('.search-button');
 
@@ -45,6 +42,7 @@ function convertFromKelvin(kelvinVal) {
 }
 
 searchButton.addEventListener('click', () => {
+    clearElements();
     const location = getLocationInput();
     getCurrentTempFromApi(location)
     .then((obj) => {
@@ -57,18 +55,10 @@ searchButton.addEventListener('click', () => {
         renderWindAndHumidity(obj);
         return obj;
     })
+    .then((obj) => {
+        renderTempSwitch(obj);
+    })
     .catch((error) => console.log(error));
-});
-
-const toggles = document.querySelectorAll('[data-toggle]');
-toggles.forEach((toggle) => {
-    toggle.addEventListener('click', () => {
-        toggles.forEach((toggle) => toggle.classList.remove('active'));
-        toggle.classList.add('active');
-
-        toggle.dataset.toggle === 'celsius' ? format = 'celsius' :
-        format = 'fahrenheit';
-    });
 });
 
 

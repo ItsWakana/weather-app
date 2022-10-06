@@ -1,4 +1,4 @@
-import { format } from "./script";
+let format;
 
 export const renderTemp = (obj) => {
 
@@ -30,9 +30,51 @@ export const renderWindAndHumidity = ({ windSpeed, humidity }) => {
     humidityDisplay.innerText = `Humidity: ${humidity}%`
 }
 
+export const renderTempSwitch = (obj) => {
+    const container = document.querySelector('.temp-toggle');
+    const celsiusSwitch = document.createElement('div');
+    const fahrenheitSwitch = document.createElement('div');
+
+    const switches = [celsiusSwitch, fahrenheitSwitch];
+
+    celsiusSwitch.className = 'celsius-radio';
+    fahrenheitSwitch.className = 'fahrenheit-radio';
+
+    celsiusSwitch.dataset.toggle = 'celsius';
+    fahrenheitSwitch.dataset.toggle = 'fahrenheit';
+
+    celsiusSwitch.innerText = '°C';
+    fahrenheitSwitch.innerText = '°F';
+
+    addEventListeners(switches, obj);
+
+    container.append(celsiusSwitch, fahrenheitSwitch);
+
+}
+
+function addEventListeners(toggles, obj) {
+    toggles.forEach((toggle) => {
+        toggle.addEventListener('click', () => {
+            toggles.forEach((toggle) => toggle.classList.remove('active'));
+            toggle.classList.add('active');
+            toggle.dataset.toggle === 'celsius' ? format = 'celsius' :
+            format = 'fahrenheit';
+
+            renderTemp(obj.tempObj);
+        });
+    });
+}
+
+export const clearElements = () => {
+    const container = document.querySelector('.temp-toggle');
+
+    container.replaceChildren();
+}
+
 export const getLocationInput = () => {
     const inputField = document.getElementById('search-place').value;
 
     return inputField;
 }
+
 

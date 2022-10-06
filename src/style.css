@@ -159,7 +159,7 @@ p {
 
 .refresh-icon.visible {
     opacity: 1;
-    transition: transform 2s ease-in-out;
+    transition: transform 1s;
 }
 
 .refresh-icon.visible.rotate {

@@ -7,9 +7,8 @@ import refresh from '/src/assets/refresh.svg';
 const searchButton = document.querySelector('.search-button');
 
 const getCurrentTempFromApi = async (city) => {
-
-    const refresh = document.querySelector('.refresh-icon');
     try {
+        const refresh = document.querySelector('.refresh-icon');
         refresh.classList.add('visible');
         refresh.classList.add('rotate');
         const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=8ff600f260cf77d42329c37dcecce5f4`, {
@@ -18,6 +17,7 @@ const getCurrentTempFromApi = async (city) => {
         
         const data = await response.json();
         refresh.classList.remove('visible');
+        refresh.classList.remove('rotate');
 
         const tempKelvin = data.main.temp;
         const weatherDescription = data.weather[0].description;

@@ -55,7 +55,9 @@ export const renderTempSwitch = (obj) => {
 function addEventListeners(toggles, obj) {
     toggles.forEach((toggle) => {
         toggle.addEventListener('click', () => {
-            toggles.forEach((toggle) => toggle.classList.remove('active'));
+            toggles.forEach((toggle) => {
+                toggle.classList.remove('active');
+            });
             toggle.classList.add('active');
             toggle.dataset.toggle === 'celsius' ? format = 'celsius' :
             format = 'fahrenheit';

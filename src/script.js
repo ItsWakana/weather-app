@@ -1,8 +1,6 @@
 import { clearElements, clearInput, getLocationInput, renderDescription, renderLocation, renderTemp, renderTempSwitch, renderWindAndHumidity } from './DomElements';
 import './style.css';
 import { convertToCelsius, convertToFahrenheit } from './utilities';
-import magnifyingGlass from '/src/assets/magnifying-glass.svg';
-import refresh from '/src/assets/refresh.svg';
 
 const searchButton = document.querySelector('.search-button');
 
@@ -16,6 +14,7 @@ const getCurrentTempFromApi = async (city) => {
         });
         
         const data = await response.json();
+
         refresh.classList.remove('visible');
 
         const tempKelvin = data.main.temp;
@@ -24,6 +23,16 @@ const getCurrentTempFromApi = async (city) => {
         const humidity = data.main.humidity;
 
         const tempObj = convertFromKelvin(tempKelvin);
+
+        if (tempObj === undefined) {
+            return;
+        }
+        renderTemp(tempObj);
+        renderLocation(city);
+        renderDescription(weatherDescription);
+        renderWindAndHumidity(windSpeed, humidity);
+
+        renderTempSwitch(tempObj);
 
         return { tempObj, weatherDescription, windSpeed, humidity }
 
@@ -41,26 +50,30 @@ function convertFromKelvin(kelvinVal) {
     return { celsius, fahrenheit };
 }
 
+// searchButton.addEventListener('click', () => {
+//     clearElements();
+//     const location = getLocationInput();
+//     getCurrentTempFromApi(location)
+//     .then((obj) => {
+//         console.log(obj);
+//         if (obj.tempObj === undefined) {
+//             return;
+//         }
+//         renderTemp(obj.tempObj);
+//         renderLocation(location);
+//         renderDescription(obj.weatherDescription);
+//         renderWindAndHumidity(obj);
+//         return obj;
+//     })
+//     .then((obj) => {
+//         renderTempSwitch(obj);
+//     })
+//     .catch((error) => console.log(error));
+// });
+
 searchButton.addEventListener('click', () => {
     clearElements();
     const location = getLocationInput();
-    getCurrentTempFromApi(location)
-    .then((obj) => {
-        if (obj.tempObj === undefined) {
-            return;
-        }
-        renderTemp(obj.tempObj);
-        renderLocation(location);
-        renderDescription(obj.weatherDescription);
-        renderWindAndHumidity(obj);
-        return obj;
-    })
-    .then((obj) => {
-        renderTempSwitch(obj);
-    })
-    .catch((error) => console.log(error));
-});
+    getCurrentTempFromApi(location);
 
-
-
-
+})

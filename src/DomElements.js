@@ -22,7 +22,7 @@ export const renderDescription = (desc) => {
     descriptionDisplay.innerText = capitalize;
 }
 
-export const renderWindAndHumidity = ({ windSpeed, humidity }) => {
+export const renderWindAndHumidity = (windSpeed, humidity) => {
     const windDisplay = document.querySelector('.display-wind');
     const humidityDisplay = document.querySelector('.display-humidity');
 
@@ -60,7 +60,7 @@ function addEventListeners(toggles, obj) {
             toggle.dataset.toggle === 'celsius' ? format = 'celsius' :
             format = 'fahrenheit';
 
-            renderTemp(obj.tempObj);
+            renderTemp(obj);
         });
     });
 }
